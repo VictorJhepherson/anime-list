@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Animes from './pages/Animes';
 import AnimeDetails from './pages/Anime';
 import About from './pages/About';
+import Page404 from './pages/404';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/animes" element={<Animes />} />
         <Route path="/animes/:id" element={<AnimeDetails />} />
         <Route path="/about" element={<About />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   );
