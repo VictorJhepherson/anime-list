@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './styles/GlobalStyles';
 
 import Home from './pages/Home';
@@ -18,6 +19,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
+
+      <ToastContainer autoClose={3000} className="toast-container" />
     </BrowserRouter>
   );
 }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from './styled';
 
+import { toast } from 'react-toastify';
+
 import { IPropsCharacters, Character } from '../../interfaces';
 import api from '../../services/api';
 import CharacterItem from '../CharacterItem';
 import Spinner from '../Spinner';
+import * as messages from '../../utils/messages';
 
 const Characters = (props: IPropsCharacters) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,24 +27,28 @@ const Characters = (props: IPropsCharacters) => {
 
   useEffect(() => {
     const fetchCharacters = () => {
-      const characterList: Array<Character> = [];
+      try {
+        const characterList: Array<Character> = [];
 
-      props.character.forEach(async (character) => {
-        await api
-          .get(`/media-characters/${character.id}/character`)
-          .then((response) => {
-            characterList.push(response.data.data);
-          });
-      });
+        props.character.forEach(async (character) => {
+          await api
+            .get(`/media-characters/${character.id}/character`)
+            .then((response) => {
+              characterList.push(response.data.data);
+            });
+        });
 
-      setTimeout(() => {
-        setList(characterList);
-        setIsLoading(false);
-      }, 1000);
+        setTimeout(() => {
+          setList(characterList);
+          setIsLoading(false);
+        }, 1500);
+      } catch (e) {
+        toast.error(messages.genericError);
+      }
     };
 
     fetchCharacters();
-  }, [props.character]);
+  }, []);
 
   return (
     <Container>

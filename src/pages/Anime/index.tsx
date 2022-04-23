@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+
 import { Container } from './styled';
 
 import NavBar from '../../components/NavBar';
@@ -9,6 +12,7 @@ import Spinner from '../../components/Spinner';
 
 import api from '../../services/api';
 import { Anime } from '../../interfaces';
+import * as messages from '../../utils/messages';
 
 export default function AnimeDetails() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,10 +21,14 @@ export default function AnimeDetails() {
 
   useEffect(() => {
     const fetchAnime = async () => {
-      const response = await api.get(`/anime/${id}`);
+      try {
+        const response = await api.get(`/anime/${id}`);
 
-      setAnime(response.data.data);
-      setIsLoading(false);
+        setAnime(response.data.data);
+        setIsLoading(false);
+      } catch (e) {
+        toast.error(messages.genericError);
+      }
     };
 
     fetchAnime();

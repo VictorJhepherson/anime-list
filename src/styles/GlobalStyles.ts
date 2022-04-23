@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import theme from './theme';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
   @font-face {
@@ -50,5 +51,12 @@ export default createGlobalStyle`
     font-family: ${() => theme.font.fontFamily};
     font-size: 1.6rem;
     background-color: ${() => theme.colors.white};
+  }
+
+  body .Toastify .Toastify__toast-container .Toastify__toast--success {
+    background: ${theme.colors.success};
+  }
+  body .Toastify .Toastify__toast-container .Toastify__toast--error {
+    background: ${theme.colors.error};
   }
 `;

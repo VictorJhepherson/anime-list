@@ -22,13 +22,19 @@ import {
   Middle,
   ContentCharacters,
 } from './styled';
+
+import { toast } from 'react-toastify';
+
 import theme from '../../styles/theme';
 import { fadeInUp, formatDesc, formatDate, Upper } from '../../utils';
+import * as messages from '../../utils/messages';
 import api from '../../services/api';
 import GenreDD from '../Genre';
 import Character from '../Characters';
+import Spinner from '../Spinner';
 
 const AnimeInfo = (props: IProps) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [genres, setGenres] = useState<Array<Genre>>([]);
   const [characters, setCharacters] = useState<Array<Characters>>([]);
 
@@ -45,25 +51,30 @@ const AnimeInfo = (props: IProps) => {
   };
 
   useEffect(() => {
-    const fetchGenres = async () => {
-      const response = await api.get(`/anime/${props.anime.id}/genres`);
+    const fetchGenresAndCharacters = async () => {
+      try {
+        const responseGenres = await api.get(`/anime/${props.anime.id}/genres`);
 
-      setGenres(response.data.data);
+        setGenres(responseGenres.data.data);
+
+        const responseCharacter = await api.get(
+          `/anime/${props.anime.id}/characters?page[limit]=5`,
+        );
+
+        setCharacters(responseCharacter.data.data);
+
+        setIsLoading(false);
+      } catch (e) {
+        toast.error(messages.genericError);
+      }
     };
 
-    const fetchCharacter = async () => {
-      const response = await api.get(
-        `/anime/${props.anime.id}/characters?page[limit]=5&page[offset]=0`,
-      );
-
-      setCharacters(response.data.data);
-    };
-
-    fetchGenres();
-    fetchCharacter();
+    fetchGenresAndCharacters();
   }, [props.anime.id]);
 
-  return (
+  return isLoading ? (
+    <Spinner size="normal" />
+  ) : (
     <div>
       <Header>
         <div

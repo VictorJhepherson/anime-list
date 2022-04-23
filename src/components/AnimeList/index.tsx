@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 import { PaginationContainer, ListAnime } from './styled';
 
+import { toast } from 'react-toastify';
+
 import { Anime } from '../../interfaces';
 import { numberOfPages, animePerPage } from '../../utils';
+import * as messages from '../../utils/messages';
 import api from '../../services/api';
 
 import AnimeCard from '../AnimeCard';
@@ -34,12 +37,16 @@ export default function AnimeList() {
 
   useEffect(() => {
     const fetchAnimes = async () => {
-      const response = await api.get(
-        `/anime?page[limit]=${animePerPage}&page[offset]=${currentPage}`,
-      );
+      try {
+        const response = await api.get(
+          `/anime?page[limit]=${animePerPage}&page[offset]=${currentPage}`,
+        );
 
-      setAnimes(response.data.data);
-      setIsLoading(false);
+        setAnimes(response.data.data);
+        setIsLoading(false);
+      } catch (e) {
+        toast.error(messages.genericError);
+      }
     };
 
     fetchAnimes();

@@ -239,8 +239,8 @@ export const ContentCharacters = styled.div`
   ${() => css`
     width: 95.6%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
     background: ${theme.colors.white};
     padding: 25px;
   `}
