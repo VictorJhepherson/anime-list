@@ -17,12 +17,29 @@ export default function AnimeList() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [animes, setAnimes] = useState([]);
+  const [search, setSearch] = useState('');
+  const [display, setDisplay] = useState('flex');
 
   const onPaginationClick = (
     event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
     setCurrentPage(value * animePerPage - animePerPage);
+  };
+
+  const searchAnimes = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.get(
+        `anime?filter[text]=${search}&page[limit]=12`,
+      );
+
+      setAnimes(response.data.data);
+      setIsLoading(false);
+      renderAnimes();
+    } catch (e) {
+      toast.error(messages.genericError);
+    }
   };
 
   const renderAnimes = () => {
@@ -50,14 +67,19 @@ export default function AnimeList() {
     };
 
     fetchAnimes();
-  }, [currentPage, animePerPage]);
+
+    if (search.length > 0) {
+      searchAnimes();
+      setDisplay('none');
+    }
+  }, [currentPage, search]);
 
   return isLoading ? (
     <Spinner size="normal" />
   ) : (
     <>
-      <Search />
-      <PaginationContainer>
+      <Search setSearch={setSearch} />
+      <PaginationContainer style={{ display: `${display}` }}>
         <Pagination
           defaultPage={1}
           count={numberOfPages()}

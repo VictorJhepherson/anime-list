@@ -23,6 +23,20 @@ export const Content = styled(motion.div)`
   `}
 `;
 
+export const SearchContent = styled.div`
+  ${() => css`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 500ms ease-in-out;
+
+    button:hover {
+      transform: scale(1.2);
+    }
+  `}
+`;
+
 export const Input = styled.input`
   ${() => css`
     padding: 10px;

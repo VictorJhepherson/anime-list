@@ -24,10 +24,12 @@ const Logo: React.FC<LogoProps> = ({ size = 'normal', name = 'mob' }) => {
   }
   return (
     <img
+      style={{ cursor: 'pointer' }}
       src={`/img/${name}.png`}
       alt="Logo Pokedex"
       height={height}
       width={width}
+      onClick={() => window.location.reload()}
     />
   );
 };

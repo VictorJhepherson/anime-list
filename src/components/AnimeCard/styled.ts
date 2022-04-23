@@ -49,7 +49,7 @@ export const CardType = styled.span`
 
 export const CardId = styled.span`
   ${() => css`
-    width: 3.7rem;
+    width: 4.3rem;
     color: ${theme.colors.gray};
     transform: rotate(5deg);
     padding: 0.3rem;
