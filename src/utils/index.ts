@@ -27,9 +27,6 @@ export const formatDesc = (description: string) => {
   if (description.includes('['))
     return description.substring(0, description.indexOf('['));
 
-  if (description.includes('('))
-    return description.substring(0, description.indexOf('('));
-
   return description;
 };
 

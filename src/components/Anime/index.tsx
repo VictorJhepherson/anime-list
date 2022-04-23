@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IProps, Genre } from '../../interfaces';
+import { IProps, Genre, Characters } from '../../interfaces';
 import {
   Header,
   Content,
@@ -9,6 +9,7 @@ import {
   AvaregeRating,
   Status,
   Type,
+  SubType,
   ContainerInfo,
   Info,
   Title,
@@ -18,14 +19,18 @@ import {
   ContentTitle,
   Footer,
   ContentAbout,
+  Middle,
+  ContentCharacters,
 } from './styled';
 import theme from '../../styles/theme';
 import { fadeInUp, formatDesc, formatDate, Upper } from '../../utils';
 import api from '../../services/api';
 import GenreDD from '../Genre';
+import Character from '../Characters';
 
 const AnimeInfo = (props: IProps) => {
   const [genres, setGenres] = useState<Array<Genre>>([]);
+  const [characters, setCharacters] = useState<Array<Characters>>([]);
 
   const renderDesc = () => {
     const pList: Array<JSX.Element> = [];
@@ -46,7 +51,16 @@ const AnimeInfo = (props: IProps) => {
       setGenres(response.data.data);
     };
 
+    const fetchCharacter = async () => {
+      const response = await api.get(
+        `/anime/${props.anime.id}/characters?page[limit]=5&page[offset]=0`,
+      );
+
+      setCharacters(response.data.data);
+    };
+
     fetchGenres();
+    fetchCharacter();
   }, [props.anime.id]);
 
   return (
@@ -76,6 +90,9 @@ const AnimeInfo = (props: IProps) => {
                 <Type className={props.anime.type}>
                   {props.anime.type.toUpperCase()}
                 </Type>
+                <SubType className={props.anime.attributes.subtype}>
+                  {props.anime.attributes.subtype.toUpperCase()}
+                </SubType>
               </AvarageContainer>
             </HeaderContent>
           </Content>
@@ -89,6 +106,19 @@ const AnimeInfo = (props: IProps) => {
           </Info>
         </ContainerInfo>
       </Header>
+
+      <ContainerTitle>
+        <ContentTitle>
+          <h2>Characters</h2>
+        </ContentTitle>
+        <ContentTitle></ContentTitle>
+      </ContainerTitle>
+
+      <Middle>
+        <ContentCharacters>
+          <Character character={characters} key={props.anime.id} />
+        </ContentCharacters>
+      </Middle>
 
       <ContainerTitle>
         <ContentTitle>

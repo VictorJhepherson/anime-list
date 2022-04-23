@@ -6,9 +6,10 @@ import theme from '../../styles/theme';
 export const Header = styled.header`
   ${() => css`
     width: 100%;
+    min-height: 650px;
     background: ${theme.colors.white};
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     padding: 20px;
@@ -123,6 +124,37 @@ export const Type = styled.span`
   `}
 `;
 
+export const SubType = styled.span`
+  ${() => css`
+    width: 8rem;
+    color: #333;
+    text-align: center;
+    padding: 0.1rem;
+    font-weight: 700;
+    border-radius: 10px 0 10px 0;
+    margin-bottom: 15px;
+
+    &.movie {
+      background-color: ${theme.typeColors.movie};
+    }
+    &.music {
+      background-color: ${theme.typeColors.music};
+    }
+    &.special {
+      background-color: ${theme.typeColors.special};
+    }
+    &.ONA {
+      background-color: ${theme.typeColors.ONA};
+    }
+    &.OVA {
+      background-color: ${theme.typeColors.OVA};
+    }
+    &.TV {
+      background-color: ${theme.typeColors.TV};
+    }
+  `}
+`;
+
 export const ContainerInfo = styled.div`
   ${() => css`
     display: flex;
@@ -189,6 +221,28 @@ export const ContentTitle = styled.div`
       font-size: 32px;
       padding: 10px;
     }
+  `}
+`;
+
+export const Middle = styled.div`
+  ${() => css`
+    width: 100%;
+    background: ${theme.colors.transparent};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  `}
+`;
+
+export const ContentCharacters = styled.div`
+  ${() => css`
+    width: 95.6%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: ${theme.colors.white};
+    padding: 25px;
   `}
 `;
 

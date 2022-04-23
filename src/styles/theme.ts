@@ -37,8 +37,13 @@ export default {
     transparent: 'transparent',
   },
   typeColors: {
-    movie: '#F30D79',
     anime: '#8473F6',
+    movie: '#F30D79',
+    music: '#F3DA0D',
+    special: '#0DF393',
+    ONA: '#F30D0D',
+    OVA: '#0DE0F3',
+    TV: '#9D0DF3',
   },
   nth: {
     one: '2n+1',

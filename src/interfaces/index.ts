@@ -56,20 +56,27 @@ export interface IPropsGenre {
   key: string;
 }
 
-export interface Links {
-  self: string;
-  related: string;
+export interface CharacterAttributes {
+  canonicalName: string;
+  description: string;
+  image: Images;
 }
 
 export interface Character {
-  links: Links;
-}
-
-export interface Relationships {
-  character: Character;
+  id: string;
+  attributes: CharacterAttributes;
 }
 
 export interface Characters {
   id: string;
-  relationships: Relationships;
+}
+
+export interface IPropsCharacters {
+  character: Characters[];
+  key: string;
+}
+
+export interface IPropsCharacter {
+  character: Character;
+  key: string;
 }
