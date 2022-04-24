@@ -53,15 +53,13 @@ const AnimeInfo = (props: IProps) => {
   useEffect(() => {
     const fetchGenresAndCharacters = async () => {
       try {
-        const responseGenres = await api.get(`/anime/${props.anime.id}/genres`);
-
-        setGenres(responseGenres.data.data);
-
-        const responseCharacter = await api.get(
-          `/anime/${props.anime.id}/characters?page[limit]=5`,
-        );
-
-        setCharacters(responseCharacter.data.data);
+        await Promise.all([
+          api.get(`/anime/${props.anime.id}/genres`),
+          api.get(`/anime/${props.anime.id}/characters?page[limit]=5`),
+        ]).then((response) => {
+          setGenres(response[0].data.data);
+          setCharacters(response[1].data.data);
+        });
 
         setIsLoading(false);
       } catch (e) {

@@ -26,22 +26,22 @@ const Characters = (props: IPropsCharacters) => {
   };
 
   useEffect(() => {
-    const fetchCharacters = () => {
+    const fetchCharacters = async () => {
       try {
         const characterList: Array<Character> = [];
 
-        props.character.forEach(async (character) => {
-          await api
-            .get(`/media-characters/${character.id}/character`)
-            .then((response) => {
-              characterList.push(response.data.data);
-            });
-        });
+        await Promise.all(
+          props.character.map(async (character) => {
+            await api
+              .get(`/media-characters/${character.id}/character`)
+              .then((response) => {
+                characterList.push(response.data.data);
+              });
+          }),
+        );
 
-        setTimeout(() => {
-          setList(characterList);
-          setIsLoading(false);
-        }, 1500);
+        setList(characterList);
+        setIsLoading(false);
       } catch (e) {
         toast.error(messages.genericError);
       }
