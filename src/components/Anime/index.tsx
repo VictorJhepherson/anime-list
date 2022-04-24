@@ -73,7 +73,7 @@ const AnimeInfo = (props: IProps) => {
   return isLoading ? (
     <Spinner size="normal" />
   ) : (
-    <div>
+    <div style={{ width: '100%' }}>
       <Header>
         <div
           style={{
